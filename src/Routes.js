@@ -5,14 +5,7 @@ import Main from './Pages/Main/Main';
 import Login from './Pages/Login/Login';
 import Signup from './Pages/Signup/Signup';
 import CreatorApply from './Pages/CreatorApply/CreatorApply';
-<<<<<<< HEAD
-// import ProductDetail from './Pages/ProductDetail/ProductDetail';
-import ReviewUpload from './Pages/ReveiwUpload/ReviewUpload';
-
-// import Search from "./Pages/Search/Search";
-=======
 import ProductDetail from './Pages/ProductDetail/ProductDetail';
->>>>>>> 4be7b9a... Add: 상세페이지 레이아웃 구현 완료
 
 class Routes extends Component {
   render() {
