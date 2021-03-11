@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-// import { LIKE_API } from "../../config";
 import { PRODUCTLIST_API } from '../../config';
 import theme from '../../Styles/theme';
 
@@ -26,6 +25,7 @@ function Product({
   const handleLike = () => {
     if (localStorage.getItem('access_token')) {
       fetch(`${PRODUCTLIST_API}/${id}/like`, {
+        method: 'POST',
         headers: {
           Authorization:
             localStorage.getItem('access_token') ||

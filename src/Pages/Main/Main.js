@@ -26,7 +26,7 @@ function Main() {
 
   const getProducts = () => {
     fetch(PRODUCTLIST_API, {
-      headers: { Authorization: localStorage.getItem('access_token') },
+      // headers: { Authorization: localStorage.getItem('access_token') },
     })
       .then((res) => res.json())
       .then((res) => setProducts(res.product));
@@ -94,7 +94,7 @@ function Main() {
       .then((res) => setProducts(res.product));
   };
 
-  const filterProducts = products.filter(
+  const filterProducts = products?.filter(
     (product) =>
       product.title.includes(keyword) ||
       product.category.includes(keyword) ||
@@ -130,7 +130,7 @@ function Main() {
             onChange={handleSearch}
           />
           <SearchBtn
-            src="https://www.flaticon.com/svg/vstatic/svg/149/149852.svg?token=exp=1615396961~hmac=ebcc0ed91e3343d3b07b3de748a4dc08"
+            src="https://www.flaticon.com/svg/vstatic/svg/149/149852.svg?token=exp=1615468234~hmac=f7d4418a6d04578eabed015add1ec396"
             alt="search"
           />
         </Search>
