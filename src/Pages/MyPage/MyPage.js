@@ -26,7 +26,9 @@ function MyPage() {
   const getProduct = () => {
     fetch(MYPAGE_API, {
       headers: {
-        Authorization: localStorage.getItem('access_token'),
+        Authorization:
+          localStorage.getItem('access_token') ||
+          localStorage.getItem('kakao_token'),
       },
     })
       .then((res) => res.json())

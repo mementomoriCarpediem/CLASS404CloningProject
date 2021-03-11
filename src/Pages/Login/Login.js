@@ -28,6 +28,8 @@ function Login(props) {
           .then((res) => res.json())
           .then((res) => {
             localStorage.setItem('kakao_token', res.access_token);
+            localStorage.setItem('profileImage', res.profileImage);
+            localStorage.setItem('user_name', res.user_name);
             if (res.access_token) {
               alert('로그인 성공!');
               props.history.push('/');
@@ -77,11 +79,8 @@ function Login(props) {
       })
         .then((res) => res.json())
         .then((data) => {
-          data.AUTHORIZATION &&
-            localStorage.setItem('access_token', data.AUTHORIZATION);
-
-          data.profileImage &&
-            localStorage.setItem('profileImage', data.profileImage);
+          localStorage.setItem('access_token', data.access_token);
+          localStorage.setItem('profileImage', data.profileImage);
           localStorage.setItem('user_name', data.user_name);
 
           props.history.push('/');

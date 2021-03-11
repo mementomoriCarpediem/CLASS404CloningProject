@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { LIKE_API } from "../../config";
-import theme from "../../Styles/theme";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+// import { LIKE_API } from "../../config";
+import { PRODUCTLIST_API } from '../../config';
+import theme from '../../Styles/theme';
 
 function Product({
   id,
@@ -23,11 +24,12 @@ function Product({
   const [likeNum, setLikeNum] = useState(likeCount);
 
   const handleLike = () => {
-    if (localStorage.getItem("access_token")) {
-      fetch(LIKE_API, {
+    if (localStorage.getItem('access_token')) {
+      fetch(`${PRODUCTLIST_API}/${id}/like`, {
         headers: {
           Authorization:
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMX0.SgWQ9rtvOr66TswqrCkKSi1SLepMZ-eHmiyuy05Si64",
+            localStorage.getItem('access_token') ||
+            localStorage.getItem('kakao_token'),
         },
         body: {
           like: true,
@@ -37,15 +39,15 @@ function Product({
         .then((res) => setLikeNum(res.likeCount));
 
       if (isLikeCliked === false) {
-        alert("찜한 목록에 추가되었습니다!");
+        alert('찜한 목록에 추가되었습니다!');
         setLikeNum(likeCount + 1);
       } else {
-        alert("찜한 목록에서 제거되었습니다.");
+        alert('찜한 목록에서 제거되었습니다.');
         setLikeNum(likeCount);
       }
       setIsLikeCliked(!isLikeCliked);
     } else {
-      alert("로그인한 유저만 찜하기가 가능합니다!");
+      alert('로그인한 유저만 찜하기가 가능합니다!');
     }
   };
 

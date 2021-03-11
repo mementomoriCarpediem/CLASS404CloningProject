@@ -7,10 +7,11 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { CATEGORYLIST_DATA } from '../../config';
 
 function CategoryModal({
-  makeCategoryQuery,
-  saveCategory,
   handleCategoryModal,
   checkedCategory,
+  setCheckedCategory,
+  saveCategory,
+  clearCategory,
 }) {
   const [categoryData, setCategoryData] = useState([]);
 
@@ -25,7 +26,11 @@ function CategoryModal({
   };
 
   const handleCategory = (e) => {
-    saveCategory(e.target.value, e.target.checked);
+    if (checkedCategory.includes(e.target.value)) {
+      checkedCategory.splice(checkedCategory.indexOf(e.target.value), 1);
+    } else {
+      setCheckedCategory([...checkedCategory, e.target.value]);
+    }
   };
 
   return (
@@ -45,15 +50,15 @@ function CategoryModal({
               value={category.id}
               label={category.name}
               onChange={handleCategory}
-              // checked={(checkedCategory) =>
-              //   checkedCategory.includes(category.id) && true
-              // }
             />
           ))}
         </CheckboxList>
         <ButtonWrapper>
-          <Button name="초기화" />
-          <Button name="저장하기" onClick={makeCategoryQuery} />
+          <Button name="초기화" onClick={() => clearCategory()} />
+          <Button
+            name="저장하기"
+            onClick={() => saveCategory(checkedCategory)}
+          />
         </ButtonWrapper>
       </ModalContainer>
     </ModalDim>

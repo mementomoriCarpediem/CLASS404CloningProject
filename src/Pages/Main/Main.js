@@ -10,35 +10,24 @@ import SortingModal from '../../Components/SortingModal/SortingModal';
 
 import { PRODUCTLIST_DATA, PRODUCTLIST_API } from '../../config';
 
-function Main(props) {
+function Main() {
   const history = useHistory();
   const [keyword, setKeyword] = useState('');
   const [products, setProducts] = useState([]);
   const [isCategoryModalOn, setIsCategoryModalOn] = useState(false);
   const [isSortingModalOn, setIsSortingModalOn] = useState(false);
   const [checkedCategory, setCheckedCategory] = useState([]);
-  const [queryStringArr, setQueryStringArr] = useState([]);
-  const [isLogin, setIsLogin] = useState(false);
-  const [profileImage, setProfileImage] = useState('');
-
-  // console.log(props.location.state.isLogin);
+  const [checkedSorting, setCheckedSorting] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
     getProducts();
-    // setIsLogin(props.location.state.isLogin);
-    // setProfileImage(props.location.state.profileImage);
   }, []);
 
   const getProducts = () => {
-    fetch(
-      PRODUCTLIST_API,
-      localStorage.getItem('access_token') && {
-        headers: {
-          Authorization: localStorage.getItem('access_token'),
-        },
-      }
-    )
+    fetch(PRODUCTLIST_API, {
+      headers: { Authorization: localStorage.getItem('access_token') },
+    })
       .then((res) => res.json())
       .then((res) => setProducts(res.product));
   };
@@ -53,81 +42,57 @@ function Main(props) {
 
   const handleSortingModal = () => {
     setIsSortingModalOn(!isSortingModalOn);
+    // setCheckedSorting('');
   };
 
-  const saveCategory = (nowValue, isChecked) => {
-    // console.log(nowValue, isChecked);
-
-    if (queryStringArr.length > 3) {
-      setQueryStringArr([]);
-    }
-
-    if (isChecked) {
-      setCheckedCategory([...checkedCategory, nowValue]);
-    } else {
-      setCheckedCategory((checkedCategory) =>
-        checkedCategory.splice(checkedCategory.indexOf(nowValue.toString()))
-      );
-    }
+  const clearCategory = () => {
+    handleCategoryModal();
+    setCheckedCategory([]);
+    history.push('/');
   };
 
-  const makeCategoryQuery = () => {
+  const saveSorting = () => {
+    handleSortingModal();
+
+    const sortingQueryFirst = '?sort=' + checkedSorting;
+    const sortingQueryExtra = '&sort=' + checkedSorting;
+
+    const queryString = window.location.search.includes('=')
+      ? sortingQueryExtra
+      : sortingQueryFirst;
+
+    history.push(history.location.search + queryString);
+
+    fetch(PRODUCTLIST_API + queryString, {
+      headers: { Authorization: localStorage.getItem('access_token') },
+    })
+      .then((res) => res.json())
+      .then((res) => setProducts(res.product));
+  };
+
+  const saveCategory = () => {
     handleCategoryModal();
 
-    const changedCategory = checkedCategory.map((each) => `category=${each}`);
+    const categoryQueryExtra = checkedCategory
+      .map((id) => '&category=' + id)
+      .join()
+      .replaceAll(',', '');
 
-    setQueryStringArr((queryStringArr) => [
-      ...queryStringArr,
-      changedCategory.join('&'),
-    ]);
+    const categoryQueryFirst =
+      '?' + categoryQueryExtra.slice(1, categoryQueryExtra.length);
 
-    // queryStringArr.join('&') && history.push(`?${queryStringArr.join('&')}`);
-    // console.log(history);
+    const queryString = window.location.search.includes('=')
+      ? categoryQueryExtra
+      : categoryQueryFirst;
 
-    // fetch(
-    //   PRODUCTLIST_API + history.location.search
-    //   //   , {
-    //   //   headers: { Authorization: localStorage.getItem("access_token") },
-    //   // }
-    // )
-    //   .then((res) => res.json())
-    //   .then((res) => setProducts(res.product));
+    history.push(history.location.search + queryString);
+
+    fetch(PRODUCTLIST_API + history.location.search, {
+      headers: { Authorization: localStorage.getItem('access_token') },
+    })
+      .then((res) => res.json())
+      .then((res) => setProducts(res.product));
   };
-
-  const saveSorting = (checkedSorting) => {
-    // console.log(checkedSorting);
-    if (queryStringArr.length > 3) {
-      setQueryStringArr([]);
-    }
-
-    const changedSorting = `sorting=${checkedSorting}`;
-
-    if (queryStringArr.some((each) => each.includes('sorting'))) {
-      const indexOfsort = queryStringArr.findIndex((each) => {
-        each.includes('sort');
-      });
-
-      setQueryStringArr((queryStringArr) =>
-        queryStringArr.splice(indexOfsort, 1, changedSorting)
-      );
-
-      // console.log(indexOfsort, changedSorting);
-    } else {
-      setQueryStringArr((queryStringArr) => [
-        ...queryStringArr,
-        changedSorting,
-      ]);
-    }
-
-    // history.push(`${history.location.search}?${queryStringArr.join('&')}`);
-    // fetch(PRODUCTLIST_API + queryString, {
-    //   headers: { Authorization: localStorage.getItem("access_token") },
-    // })
-    //   .then((res) => res.json())
-    //   .then((res) => setProducts(res.product));
-  };
-  console.log('queryStirngArr ==>', queryStringArr.join('&'));
-  console.log('checkedCategory ==>', checkedCategory);
 
   const filterProducts = products.filter(
     (product) =>
@@ -141,18 +106,18 @@ function Main(props) {
       {isCategoryModalOn && (
         <CategoryModal
           handleCategoryModal={handleCategoryModal}
-          saveCategory={saveCategory}
-          setIsCategoryModalOn={setIsCategoryModalOn}
-          makeCategoryQuery={makeCategoryQuery}
           checkedCategory={checkedCategory}
+          setCheckedCategory={setCheckedCategory}
+          saveCategory={saveCategory}
+          clearCategory={clearCategory}
         />
       )}
       {isSortingModalOn && (
         <SortingModal
           handleSortingModal={handleSortingModal}
           saveSorting={saveSorting}
-          // checkedSorting={checkedSorting}
-          // setCheckedSorting={setCheckedSorting}
+          checkedSorting={checkedSorting}
+          setCheckedSorting={setCheckedSorting}
         />
       )}
       <Navigation />
@@ -165,7 +130,7 @@ function Main(props) {
             onChange={handleSearch}
           />
           <SearchBtn
-            src="https://www.flaticon.com/svg/vstatic/svg/622/622669.svg?token=exp=1615437499~hmac=205a7de5c85a4731e97315fd5e947469"
+            src="https://www.flaticon.com/svg/vstatic/svg/149/149852.svg?token=exp=1615396961~hmac=ebcc0ed91e3343d3b07b3de748a4dc08"
             alt="search"
           />
         </Search>

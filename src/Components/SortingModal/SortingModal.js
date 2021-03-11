@@ -5,7 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { SORTINGLIST_DATA } from '../../config';
 
-function SortingModal({ handleSortingModal, saveSorting }) {
+function SortingModal({
+  handleSortingModal,
+  saveSorting,
+  checkedSorting,
+  setCheckedSorting,
+}) {
   const [sortingData, setSortingData] = useState([]);
 
   useEffect(() => {
@@ -19,9 +24,10 @@ function SortingModal({ handleSortingModal, saveSorting }) {
   };
 
   const handleSorting = (e) => {
-    saveSorting(e.target.value);
-    handleSortingModal();
+    setCheckedSorting(e.target.value);
   };
+
+  checkedSorting && saveSorting();
 
   return (
     <ModalDim>

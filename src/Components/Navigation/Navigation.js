@@ -14,19 +14,20 @@ import User from '../User/User';
 function Navigation(props) {
   const history = useHistory();
 
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAccountOn, setIsAccountOn] = useState(false);
   const [userName, setUserName] = useState('');
   const [profileImage, setProfileImage] = useState('');
-
-  console.log(isAccountOn, profileImage);
 
   useEffect(() => {
     handleLogin();
   });
 
   const handleLogin = () => {
-    if (localStorage.getItem('access_token')) {
+    if (
+      localStorage.getItem('access_token') ||
+      localStorage.getItem('kakao_token')
+    ) {
       setIsLoggedIn(true);
       setUserName(localStorage.getItem('user_name'));
       setProfileImage(localStorage.getItem('profileImage'));
@@ -39,6 +40,7 @@ function Navigation(props) {
 
   const handleLogout = () => {
     localStorage.clear();
+    setIsLoggedIn(false);
   };
 
   return (

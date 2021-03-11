@@ -36,6 +36,8 @@ function ProductDetail(props) {
     reviewNumber,
   } = productData;
 
+  console.log(reviews);
+
   return (
     <>
       <Navigation />
@@ -77,24 +79,23 @@ function ProductDetail(props) {
             <ReviewSection reviews={reviews} />
           </ReviewSqaure>
           <ReviewLine>
-            <div>
-              <div className="author">
-                <img
-                  src="https://www.flaticon.com/svg/vstatic/svg/1946/1946429.svg?token=exp=1614927644~hmac=70e5850fcc6f210ad521a76ba9def55f"
-                  alt="profileImg"
-                />
-                <div className="nameAndDate">
-                  <span>현*</span>
-                  <span>
-                    {/* {reviews &&
-                    `${reviews[0].createdAt.split('-')[0]}.${
-                      reviews[0].createdAt.split('-')[1]
-                    }.${reviews[0]?.createdAt.split('-')[2]}`} */}
-                  </span>
+            {reviews?.map((review) => {
+              return (
+                <div>
+                  <div className="author">
+                    <img
+                      src="https://www.flaticon.com/svg/vstatic/svg/1946/1946429.svg?token=exp=1614927644~hmac=70e5850fcc6f210ad521a76ba9def55f"
+                      alt="profileImg"
+                    />
+                    <div className="nameAndDate">
+                      <span>{review.author}</span>
+                      <span>2021.2.13</span>
+                    </div>
+                  </div>
+                  <p>{review.text}</p>
                 </div>
-              </div>
-              {/* <p>{reviews && reviews[0].text}</p> */}
-            </div>
+              );
+            })}
           </ReviewLine>
           <button className="more">더보기</button>
           <Link to="/reviewupload">

@@ -24,7 +24,9 @@ function UserInfo({
     fetch(`${MYPAGE_API}/image`, {
       method: 'POST',
       headers: {
-        Authorization: localStorage.getItem('access_token'),
+        Authorization:
+          localStorage.getItem('access_token') ||
+          localStorage.getItem('kakao_token'),
       },
       body: formData,
     })

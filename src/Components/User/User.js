@@ -2,8 +2,6 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 function User({ onClick, large, profile }) {
-  console.log(profile);
-
   return (
     <UserProfile src={profile} alt="account" onClick={onClick} large={large} />
   );
