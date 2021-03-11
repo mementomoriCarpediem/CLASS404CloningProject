@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { KAKAO_API } from "../../config";
-import signInProps from "../../signInData";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { KAKAO_API, Login_API } from '../../config';
+import signInProps from '../../signInData';
 
 function Login(props) {
-  const [email, setEmail] = useState("");
-  const [pw, setPw] = useState("");
-  const [IdEmptyMsg, setIdEmptyMsg] = useState("");
-  const [PwEmptyMsg, setPwEmptyMsg] = useState("");
+  const [email, setEmail] = useState('');
+  const [pw, setPw] = useState('');
+  const [IdEmptyMsg, setIdEmptyMsg] = useState('');
+  const [PwEmptyMsg, setPwEmptyMsg] = useState('');
 
   const { Kakao } = window;
 
@@ -17,35 +17,35 @@ function Login(props) {
 
     Kakao.Auth.login({
       success: function (authObj) {
-        console.log("kakao", authObj);
+        console.log('kakao', authObj);
 
         fetch(`${KAKAO_API}`, {
-          method: "GET",
+          method: 'GET',
           headers: {
             Authorization: authObj.access_token,
           },
         })
           .then((res) => res.json())
           .then((res) => {
-            localStorage.setItem("kakao_token", res.access_token);
+            localStorage.setItem('kakao_token', res.access_token);
             if (res.access_token) {
-              alert("로그인 성공!");
-              props.history.push("/");
+              alert('로그인 성공!');
+              props.history.push('/');
             }
           });
       },
 
       fail: function (err) {
-        alert("로그인 실패!");
-        console.log("err", err);
+        alert('로그인 실패!');
+        console.log('err', err);
       },
     });
   };
 
   const handleInput = (e) => {
-    if (e.target.type === "email") {
+    if (e.target.type === 'email') {
       setEmail(e.target.value);
-    } else if (e.target.type === "password") {
+    } else if (e.target.type === 'password') {
       setPw(e.target.value);
     }
   };
@@ -68,8 +68,8 @@ function Login(props) {
     e.preventDefault();
 
     if (validation()) {
-      fetch("http://", {
-        method: "POST",
+      fetch(`${Login_API}`, {
+        method: 'POST',
         body: JSON.stringify({
           email: email,
           password: pw,
@@ -78,17 +78,22 @@ function Login(props) {
         .then((res) => res.json())
         .then((data) => {
           data.AUTHORIZATION &&
-            localStorage.setItem("token", data.AUTHORIZATION);
-          props.history.push("/");
+            localStorage.setItem('access_token', data.AUTHORIZATION);
+
+          data.profileImage &&
+            localStorage.setItem('profileImage', data.profileImage);
+          localStorage.setItem('user_name', data.user_name);
+
+          props.history.push('/');
         });
     } else {
-      console.log("Not Valid id or pw");
+      console.log('Not Valid id or pw');
     }
 
     if (!email) {
-      setIdEmptyMsg("⚠️ 이메일을 입력해주세요!");
+      setIdEmptyMsg('⚠️ 이메일을 입력해주세요!');
     } else if (!pw) {
-      setPwEmptyMsg("⚠️ 비밀번호를 입력해주세요!");
+      setPwEmptyMsg('⚠️ 비밀번호를 입력해주세요!');
     }
   };
 
@@ -113,10 +118,10 @@ function Login(props) {
                     onChange={handleInput}
                   />
                 </label>
-                {IdEmptyMsg && input.type === "email" && <p>{IdEmptyMsg}</p>}
-                {PwEmptyMsg && input.type === "password" && <p>{PwEmptyMsg}</p>}
+                {IdEmptyMsg && input.type === 'email' && <p>{IdEmptyMsg}</p>}
+                {PwEmptyMsg && input.type === 'password' && <p>{PwEmptyMsg}</p>}
 
-                {input.text === "비밀번호" && (
+                {input.text === '비밀번호' && (
                   <ForgotPassword>
                     <span>비밀번호를 잊으셨나요?</span>
                     <Link to="/signup">
@@ -274,7 +279,7 @@ const RightImage = styled.aside`
     width: 60%;
     height: 100vh;
     background: no-repeat
-      url("https://images.unsplash.com/photo-1537884557178-342a575d7d16?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80");
+      url('https://images.unsplash.com/photo-1537884557178-342a575d7d16?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80');
     background-size: cover;
   }
 `;

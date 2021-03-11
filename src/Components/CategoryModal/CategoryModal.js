@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import Button from "./Button/Button";
-import Checkbox from "../Checkbox/Checkbox";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { CATEGORYLIST_DATA } from "../../config";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import Button from './Button/Button';
+import Checkbox from '../Checkbox/Checkbox';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { CATEGORYLIST_DATA } from '../../config';
 
 function CategoryModal({
-  handleCategoryModal,
+  makeCategoryQuery,
   saveCategory,
+  handleCategoryModal,
   checkedCategory,
-  setCheckedCategory,
-  clearCategory,
 }) {
   const [categoryData, setCategoryData] = useState([]);
 
@@ -26,11 +25,7 @@ function CategoryModal({
   };
 
   const handleCategory = (e) => {
-    if (checkedCategory.includes(e.target.value)) {
-      checkedCategory.splice(checkedCategory.indexOf(e.target.value), 1);
-    } else {
-      setCheckedCategory([...checkedCategory, e.target.value]);
-    }
+    saveCategory(e.target.value, e.target.checked);
   };
 
   return (
@@ -38,7 +33,7 @@ function CategoryModal({
       <ModalContainer>
         <SpaceBetweenWrapper>
           <Title>카테고리 설정</Title>
-          <CloseBtn onClick={handleCategoryModal}>
+          <CloseBtn onClick={() => handleCategoryModal()}>
             <FontAwesomeIcon icon={faTimes} />
           </CloseBtn>
         </SpaceBetweenWrapper>
@@ -50,12 +45,15 @@ function CategoryModal({
               value={category.id}
               label={category.name}
               onChange={handleCategory}
+              // checked={(checkedCategory) =>
+              //   checkedCategory.includes(category.id) && true
+              // }
             />
           ))}
         </CheckboxList>
         <ButtonWrapper>
-          <Button name="초기화" onClick={() => clearCategory()} />
-          <Button name="저장하기" onClick={() => saveCategory()} />
+          <Button name="초기화" />
+          <Button name="저장하기" onClick={makeCategoryQuery} />
         </ButtonWrapper>
       </ModalContainer>
     </ModalDim>

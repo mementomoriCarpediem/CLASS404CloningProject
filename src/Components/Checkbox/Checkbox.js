@@ -20,13 +20,13 @@ function Checkbox({ onChange, checked, id, label }) {
 const CheckboxContainer = styled.div`
   width: 50%;
   margin: 4px 0;
-  cursor: pointer;
 `;
 
 const Label = styled.label`
   display: flex;
   align-items: center;
   font-size: 14px;
+  cursor: pointer;
 `;
 
 const CheckboxInput = styled.input`
@@ -34,6 +34,7 @@ const CheckboxInput = styled.input`
   height: 20px;
   margin-right: 6px;
   border: 6px solid ${(props) => props.theme.black};
+  cursor: pointer;
 `;
 
 export default Checkbox;

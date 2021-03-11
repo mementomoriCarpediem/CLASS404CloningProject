@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { KAKAO_API } from "../../config";
-import signUpProps from "../../signUpData";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { KAKAO_API, SIGNUP_API } from '../../config';
+import signUpProps from '../../signUpData';
 import {
   FormHeader,
   Form,
@@ -9,16 +9,16 @@ import {
   UserContract,
   SnsLogin,
   LeftContainer,
-} from "../Login/Login";
+} from '../Login/Login';
 
 function Signup(props) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [pw, setPw] = useState("");
-  const [repw, setRePw] = useState("");
-  const [NameEmptyMsg, setNameEmptyMsg] = useState("");
-  const [IdEmptyMsg, setIdEmptyMsg] = useState("");
-  const [PwEmptyMsg, setPwEmptyMsg] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [pw, setPw] = useState('');
+  const [repw, setRePw] = useState('');
+  const [NameEmptyMsg, setNameEmptyMsg] = useState('');
+  const [IdEmptyMsg, setIdEmptyMsg] = useState('');
+  const [PwEmptyMsg, setPwEmptyMsg] = useState('');
 
   const { Kakao } = window;
 
@@ -28,24 +28,24 @@ function Signup(props) {
     Kakao.Auth.login({
       success: function (authObj) {
         fetch(`${KAKAO_API}`, {
-          method: "GET",
+          method: 'GET',
           headers: {
             Authorization: authObj.access_token,
           },
         })
           .then((res) => res.json())
           .then((res) => {
-            localStorage.setItem("kakao_token", res.access_token);
+            localStorage.setItem('kakao_token', res.access_token);
             if (res.access_token) {
-              alert("로그인 성공!");
-              props.history.push("/");
+              alert('로그인 성공!');
+              props.history.push('/');
             }
           });
       },
 
       fail: function (err) {
-        alert("로그인 실패!");
-        console.log("err", err);
+        alert('로그인 실패!');
+        console.log('err', err);
       },
     });
   };
@@ -80,8 +80,8 @@ function Signup(props) {
     e.preventDefault();
 
     if (validation()) {
-      fetch("http://10.58.5.145:8000/user/signup", {
-        method: "POST",
+      fetch(`${SIGNUP_API}`, {
+        method: 'POST',
         body: JSON.stringify({
           email: email,
           password: pw,
@@ -91,24 +91,24 @@ function Signup(props) {
         .then((res) => res.json())
         .then((data) => {
           data.AUTHORIZATION &&
-            localStorage.setItem("class404_token", data.AUTHORIZATION);
-          props.history.push("/login");
+            localStorage.setItem('class404_token', data.AUTHORIZATION);
+          props.history.push('/login');
         });
     } else {
-      console.log("Not Valid id or pw");
+      console.log('Not Valid id or pw');
     }
 
     if (!name) {
-      setNameEmptyMsg("⚠️ 이름을 입력해주세요!");
+      setNameEmptyMsg('⚠️ 이름을 입력해주세요!');
     }
     if (!email) {
-      setIdEmptyMsg("⚠️ 이메일을 입력해주세요!");
+      setIdEmptyMsg('⚠️ 이메일을 입력해주세요!');
     }
     if (!pw) {
-      setPwEmptyMsg("⚠️ 비밀번호를 입력해주세요!");
+      setPwEmptyMsg('⚠️ 비밀번호를 입력해주세요!');
     }
     if (pw !== repw) {
-      setPwEmptyMsg("⚠️ 입력하신 비밀번호가 다릅니다!");
+      setPwEmptyMsg('⚠️ 입력하신 비밀번호가 다릅니다!');
     }
   };
 
@@ -128,10 +128,10 @@ function Signup(props) {
                   onChange={handleInput}
                 />
               </label>
-              {NameEmptyMsg && input.name === "name" && <p>{NameEmptyMsg}</p>}
-              {IdEmptyMsg && input.name === "email" && <p>{IdEmptyMsg}</p>}
-              {PwEmptyMsg && input.name === "password" && <p>{PwEmptyMsg}</p>}
-              {input.name === "password" && (
+              {NameEmptyMsg && input.name === 'name' && <p>{NameEmptyMsg}</p>}
+              {IdEmptyMsg && input.name === 'email' && <p>{IdEmptyMsg}</p>}
+              {PwEmptyMsg && input.name === 'password' && <p>{PwEmptyMsg}</p>}
+              {input.name === 'password' && (
                 <InputInfoMessage>
                   ⚠️ 영문 대문자/영문 소문자 및 숫자를 포함한 8~32자
                 </InputInfoMessage>

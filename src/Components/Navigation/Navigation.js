@@ -1,31 +1,35 @@
-import React, { useState, useEffect } from "react";
-import { withRouter, useHistory } from "react-router-dom";
-import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import React, { useState, useEffect } from 'react';
+import { withRouter, useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import {
   faChevronDown,
   faChevronUp,
   faChevronRight,
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
 
-import User from "../User/User";
+import User from '../User/User';
 
-function Navigation() {
+function Navigation(props) {
   const history = useHistory();
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isAccountOn, setIsAccountOn] = useState(false);
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState('');
+  const [profileImage, setProfileImage] = useState('');
+
+  console.log(isAccountOn, profileImage);
 
   useEffect(() => {
     handleLogin();
   });
 
   const handleLogin = () => {
-    if (localStorage.getItem("access_token")) {
+    if (localStorage.getItem('access_token')) {
       setIsLoggedIn(true);
-      setUserName(localStorage.getItem("user_name"));
+      setUserName(localStorage.getItem('user_name'));
+      setProfileImage(localStorage.getItem('profileImage'));
     }
   };
 
@@ -43,23 +47,23 @@ function Navigation() {
         <Logo
           src="/images/logo.svg"
           alt="logo"
-          onClick={() => history.push("/")}
+          onClick={() => history.push('/')}
         />
         <Wrapper>
           {isLoggedIn ? (
             <>
-              <CreatorCenter onClick={() => history.push("/create")}>
+              <CreatorCenter onClick={() => history.push('/apply')}>
                 크리에이터 센터
               </CreatorCenter>
-              <MyClass onClick={() => history.push("/mypage/myclass")}>
+              <MyClass onClick={() => history.push('/mypage')}>
                 내 클래스
               </MyClass>
-              <Heart onClick={() => history.push("/mypage/like")}>
+              <Heart onClick={() => history.push('/mypage')}>
                 <FontAwesomeIcon icon={faHeart} />
               </Heart>
               <Account>
                 <Wrapper onClick={handleAccount}>
-                  <User />
+                  <User profile={profileImage} />
                   <Arrow>
                     {isAccountOn ? (
                       <FontAwesomeIcon icon={faChevronUp} size="xs" />
@@ -70,10 +74,10 @@ function Navigation() {
                 </Wrapper>
                 {isAccountOn && (
                   <AccountBox>
-                    <UserInfo onClick={() => history.push("/mypage")}>
-                      <User />
+                    <UserInfo onClick={() => history.push('/mypage')}>
+                      <User profile={profileImage} />
                       <BlockWrapper>
-                        <UserName>{userName}이사랑</UserName>
+                        <UserName>{userName}</UserName>
                         <MyPage>마이페이지</MyPage>
                         <ArrowRight>
                           <FontAwesomeIcon icon={faChevronRight} />
@@ -87,10 +91,10 @@ function Navigation() {
             </>
           ) : (
             <>
-              <Creator onClick={() => history.push("/login")}>
+              <Creator onClick={() => history.push('/login')}>
                 크리에이터 지원
               </Creator>
-              <Login onClick={() => history.push("/login")}>로그인</Login>
+              <Login onClick={() => history.push('/login')}>로그인</Login>
             </>
           )}
         </Wrapper>

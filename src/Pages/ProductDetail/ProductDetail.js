@@ -1,23 +1,27 @@
-<<<<<<< HEAD
-=======
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import { PRODUCT_DETAIL_API } from '../../config';
+import { PRODUCTLIST_API } from '../../config';
 import styled from 'styled-components';
 import ReviewSection from './ReviewSection';
 import MenuAside from './MenuAside';
+import Navigation from '../../Components/Navigation/Navigation';
 
-function ProductDetail() {
+function ProductDetail(props) {
   const [productData, setProductData] = useState('');
 
   useEffect(() => {
-    fetch(PRODUCT_DETAIL_API)
+    getData();
+  }, []);
+
+  const getData = () => {
+    fetch(`${PRODUCTLIST_API}/${props.match.params.id}`)
       .then((res) => res.json())
       .then((data) => {
-        setProductData(data.data.product);
+        setProductData(data.product[0]);
+        // console.log(data.product[0]);
       });
-  }, []);
+  };
 
   const {
     thumbnail,
@@ -29,88 +33,92 @@ function ProductDetail() {
     gift,
     description,
     reviews,
+    reviewNumber,
   } = productData;
 
   return (
-    <TopWrapper>
-      <DetailArea>
-        <div className="mainImageContainer">
-          <img src={thumbnail} alt="mainImage" />
+    <>
+      <Navigation />
+      <TopWrapper>
+        <DetailArea>
+          <div className="mainImageContainer">
+            <img src={thumbnail} alt="mainImage" />
 
-          <Link to="">
-            <button className="preview">
-              <img
-                src="https://www.flaticon.com/svg/vstatic/svg/13/13021.svg?token=exp=1615166334~hmac=0516000c85c83e8f759760d3b40767d9"
-                alt="preview"
-              />
-              클래스 미리보기
-            </button>
-          </Link>
-        </div>
-
-        <nav>
-          <a href="#review">후기</a>
-          <a href="#description">클래스소개</a>
-        </nav>
-        <ReviewSqaure id="review">
-          <p>
-            실제 수강생들의
-            <br /> 생생한 후기
-          </p>
-          <div className="twoColumn">
-            <div className="statistic">
-              <span>클래스 후기</span>
-              <span>5,041</span>
-            </div>
-            <div className="statistic">
-              <span>수강생 만족도</span>
-              <span className="satisfaction">98%</span>
-            </div>
+            <Link to="/videoplay">
+              <button className="preview">
+                <img
+                  src="https://www.flaticon.com/svg/vstatic/svg/13/13021.svg?token=exp=1615166334~hmac=0516000c85c83e8f759760d3b40767d9"
+                  alt="preview"
+                />
+                클래스 미리보기
+              </button>
+            </Link>
           </div>
-          <ReviewSection reviews={reviews} />
-        </ReviewSqaure>
-        <ReviewLine>
-          <div>
-            <div className="author">
-              <img
-                src="https://www.flaticon.com/svg/vstatic/svg/1946/1946429.svg?token=exp=1614927644~hmac=70e5850fcc6f210ad521a76ba9def55f"
-                alt="profileImg"
-              />
-              <div className="nameAndDate">
-                <span>현*</span>
-                <span>
-                  {/* {reviews &&
+
+          <nav>
+            <a href="#review">후기</a>
+            <a href="#description">클래스소개</a>
+          </nav>
+          <ReviewSqaure id="review">
+            <p>
+              실제 수강생들의
+              <br /> 생생한 후기
+            </p>
+            <div className="twoColumn">
+              <div className="statistic">
+                <span>클래스 후기</span>
+                <span>{reviewNumber}</span>
+              </div>
+              <div className="statistic">
+                <span>수강생 만족도</span>
+                <span className="satisfaction">98%</span>
+              </div>
+            </div>
+            <ReviewSection reviews={reviews} />
+          </ReviewSqaure>
+          <ReviewLine>
+            <div>
+              <div className="author">
+                <img
+                  src="https://www.flaticon.com/svg/vstatic/svg/1946/1946429.svg?token=exp=1614927644~hmac=70e5850fcc6f210ad521a76ba9def55f"
+                  alt="profileImg"
+                />
+                <div className="nameAndDate">
+                  <span>현*</span>
+                  <span>
+                    {/* {reviews &&
                     `${reviews[0].createdAt.split('-')[0]}.${
                       reviews[0].createdAt.split('-')[1]
                     }.${reviews[0]?.createdAt.split('-')[2]}`} */}
-                </span>
+                  </span>
+                </div>
               </div>
+              {/* <p>{reviews && reviews[0].text}</p> */}
             </div>
-            {/* <p>{reviews && reviews[0].text}</p> */}
-          </div>
-        </ReviewLine>
-        <button className="more">더보기</button>
-        <Link to="/">
-          <button className="createReview">리뷰작성</button>
-        </Link>
-        <ProductDescription id="description">
-          <span>
-            클래스를 <br />
-            소개합니다.
-          </span>
-          <p>{description}</p>
-        </ProductDescription>
-      </DetailArea>
+          </ReviewLine>
+          <button className="more">더보기</button>
+          <Link to="/reviewupload">
+            <button className="createReview">리뷰작성</button>
+          </Link>
+          <ProductDescription id="description">
+            <span>
+              클래스를 <br />
+              소개합니다.
+            </span>
+            <p>{description}</p>
+          </ProductDescription>
+        </DetailArea>
 
-      <MenuAside
-        category={category}
-        creatorName={creatorName}
-        className={className}
-        gift={gift}
-        price={price}
-        likeCount={likeCount}
-      />
-    </TopWrapper>
+        <MenuAside
+          category={category}
+          creatorName={creatorName}
+          className={className}
+          gift={gift}
+          price={price}
+          likeCount={likeCount}
+        />
+      </TopWrapper>
+    </>
   );
 }
 
@@ -120,7 +128,7 @@ const TopWrapper = styled.section`
   display: flex;
   width: 1170px;
   margin: 0 auto;
-  padding-top: 115px;
+  padding-top: 15px;
 `;
 
 const DetailArea = styled.div`
@@ -298,4 +306,3 @@ const ProductDescription = styled.section`
     line-height: 30px;
   }
 `;
->>>>>>> 4be7b9a... Add: 상세페이지 레이아웃 구현 완료

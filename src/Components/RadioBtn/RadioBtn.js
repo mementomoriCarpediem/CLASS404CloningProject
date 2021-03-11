@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-function RadioBtn({ label, onClick, value }) {
+function RadioBtn({ label, onClick, value, checked }) {
   return (
     <RadioBtnContainer>
       <Label>
@@ -10,6 +10,7 @@ function RadioBtn({ label, onClick, value }) {
           value={value}
           name="checkbox"
           onClick={onClick}
+          checked={checked}
         />
         {label}
       </Label>
@@ -18,13 +19,13 @@ function RadioBtn({ label, onClick, value }) {
 }
 
 const RadioBtnContainer = styled.div`
-  display: flex;
-  align-items: center;
   margin: 4px 0;
   cursor: pointer;
 `;
 
 const Label = styled.label`
+  display: flex;
+  align-items: center;
   font-size: 14px;
 `;
 

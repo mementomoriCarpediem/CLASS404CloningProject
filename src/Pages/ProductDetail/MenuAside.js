@@ -38,7 +38,7 @@ export default function MenuAside({
         </div>
         <div>
           <img
-            src="https://www.flaticon.com/svg/vstatic/svg/4150/4150861.svg?token=exp=1614919748~hmac=11c06d339b578d85e453a1b524bf7bc8"
+            src="https://www.flaticon.com/svg/vstatic/svg/4021/4021559.svg?token=exp=1615445685~hmac=1688d9676c5874d3bd310ef730d3aa3f"
             alt="satisfaction"
           />
           <span>강의 만족도 98%</span>

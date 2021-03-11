@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 // import { REVIEWUPLOAD_API } from '../../config';
 import styled from 'styled-components';
+import Navigation from '../../Components/Navigation/Navigation';
 
 export default function ReviewUpload() {
   const [imgUrl, setImgUrl] = useState('');
@@ -44,54 +45,57 @@ export default function ReviewUpload() {
   };
 
   return (
-    <Container>
-      <header>글 작성하기</header>
-      <MiddleSection>
-        <div>
-          <img
-            src="https://lh3.googleusercontent.com/a-/AOh14GgGxQ2qxqMqyjp__mgsa1TiNi23wcynZhkP2lPf2w=s96-c"
-            className="profileImage"
-            alt="profile"
-          />
-          <span>spjh2000</span>
-        </div>
-        <label>
-          <img
-            src="https://www.flaticon.com/svg/vstatic/svg/860/860766.svg?token=exp=1615194423~hmac=e9911102ef73a21e3536c2ffcea93571"
-            alt="attachment"
-          />
-          사진첨부
-          <input
-            type="file"
-            accept="image/png, image/jpeg, image/jpg"
-            onChange={handleAttatchment}
-          />
-        </label>
-      </MiddleSection>
+    <>
+      <Navigation />
+      <Container>
+        <header>글 작성하기</header>
+        <MiddleSection>
+          <div>
+            <img
+              src="https://lh3.googleusercontent.com/a-/AOh14GgGxQ2qxqMqyjp__mgsa1TiNi23wcynZhkP2lPf2w=s96-c"
+              className="profileImage"
+              alt="profile"
+            />
+            <span>spjh2000</span>
+          </div>
+          <label>
+            <img
+              src="https://www.flaticon.com/svg/vstatic/svg/860/860766.svg?token=exp=1615194423~hmac=e9911102ef73a21e3536c2ffcea93571"
+              alt="attachment"
+            />
+            사진첨부
+            <input
+              type="file"
+              accept="image/png, image/jpeg, image/jpg"
+              onChange={handleAttatchment}
+            />
+          </label>
+        </MiddleSection>
 
-      {imgUrl && (
-        <div className="attatchmentContainer">
-          <img src={imgUrl} className="attachment" alt="shownImage" />
-          <img
-            src="https://www.flaticon.com/svg/vstatic/svg/992/992660.svg?token=exp=1615206066~hmac=5d643932e6bf6d3b4c924a824f70557e"
-            className="closeButton"
-            onClick={handleRemove}
-            alt="close"
-          />
-        </div>
-      )}
-      <textarea placeholder="글을 작성해주세요" />
-      <button>저장하기</button>
-    </Container>
+        {imgUrl && (
+          <div className="attatchmentContainer">
+            <img src={imgUrl} className="attachment" alt="shownImage" />
+            <img
+              src="https://www.flaticon.com/svg/vstatic/svg/992/992660.svg?token=exp=1615206066~hmac=5d643932e6bf6d3b4c924a824f70557e"
+              className="closeButton"
+              onClick={handleRemove}
+              alt="close"
+            />
+          </div>
+        )}
+        <textarea placeholder="글을 작성해주세요" />
+        <button>저장하기</button>
+      </Container>
+    </>
   );
 }
 
 const Container = styled.div`
   position: relative;
   width: 640px;
-  height: 90vh;
+  height: 80vh;
   margin: auto;
-  padding: 100px 20px;
+  padding: 20px;
   border-bottom: ${({ theme }) => theme.border};
 
   header {

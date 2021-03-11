@@ -1,31 +1,44 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import styled from "styled-components";
-import ProductsList from "../../Components/ProductList/ProductList";
-import Filter from "../../Components/Filter/Filter";
-import CategoryModal from "../../Components/CategoryModal/CategoryModal";
-import SortingModal from "../../Components/SortingModal/SortingModal";
-import Navigation from "../../Components/Navigation/Navigation";
-import { PRODUCTLIST_DATA, PRODUCTLIST_API } from "../../config";
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 
-function Main() {
+import Navigation from '../../Components/Navigation/Navigation';
+import ProductsList from '../../Components/ProductList/ProductList';
+import Filter from '../../Components/Filter/Filter';
+import CategoryModal from '../../Components/CategoryModal/CategoryModal';
+import SortingModal from '../../Components/SortingModal/SortingModal';
+
+import { PRODUCTLIST_DATA, PRODUCTLIST_API } from '../../config';
+
+function Main(props) {
   const history = useHistory();
-  const [keyword, setKeyword] = useState("");
+  const [keyword, setKeyword] = useState('');
   const [products, setProducts] = useState([]);
   const [isCategoryModalOn, setIsCategoryModalOn] = useState(false);
   const [isSortingModalOn, setIsSortingModalOn] = useState(false);
   const [checkedCategory, setCheckedCategory] = useState([]);
-  const [checkedSorting, setCheckedSorting] = useState("");
+  const [queryStringArr, setQueryStringArr] = useState([]);
+  const [isLogin, setIsLogin] = useState(false);
+  const [profileImage, setProfileImage] = useState('');
+
+  // console.log(props.location.state.isLogin);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     getProducts();
+    // setIsLogin(props.location.state.isLogin);
+    // setProfileImage(props.location.state.profileImage);
   }, []);
 
   const getProducts = () => {
-    fetch(PRODUCTLIST_DATA, {
-      headers: { Authorization: localStorage.getItem("access_token") },
-    })
+    fetch(
+      PRODUCTLIST_API,
+      localStorage.getItem('access_token') && {
+        headers: {
+          Authorization: localStorage.getItem('access_token'),
+        },
+      }
+    )
       .then((res) => res.json())
       .then((res) => setProducts(res.product));
   };
@@ -42,54 +55,79 @@ function Main() {
     setIsSortingModalOn(!isSortingModalOn);
   };
 
-  const clearCategory = () => {
-    handleCategoryModal();
-    setCheckedCategory([]);
-    history.push("/");
+  const saveCategory = (nowValue, isChecked) => {
+    // console.log(nowValue, isChecked);
+
+    if (queryStringArr.length > 3) {
+      setQueryStringArr([]);
+    }
+
+    if (isChecked) {
+      setCheckedCategory([...checkedCategory, nowValue]);
+    } else {
+      setCheckedCategory((checkedCategory) =>
+        checkedCategory.splice(checkedCategory.indexOf(nowValue.toString()))
+      );
+    }
   };
 
-  const saveSorting = () => {
-    handleSortingModal();
-
-    const sortingQuery = "?sort=" + checkedSorting;
-    const sortingQuery2 = "&sort=" + checkedSorting;
-
-    const queryString = window.location.search.includes("=")
-      ? sortingQuery2
-      : sortingQuery;
-
-    history.push(history.location.search + queryString);
-
-    fetch(PRODUCTLIST_API + queryString, {
-      headers: { Authorization: localStorage.getItem("access_token") },
-    })
-      .then((res) => res.json())
-      .then((res) => setProducts(res.product));
-  };
-
-  const saveCategory = () => {
+  const makeCategoryQuery = () => {
     handleCategoryModal();
 
-    const categoryQueryExtra = checkedCategory
-      .map((id) => "&category=" + id)
-      .join()
-      .replaceAll(",", "");
+    const changedCategory = checkedCategory.map((each) => `category=${each}`);
 
-    const categoryQueryFirst =
-      "?" + categoryQueryExtra.slice(1, categoryQueryExtra.length);
+    setQueryStringArr((queryStringArr) => [
+      ...queryStringArr,
+      changedCategory.join('&'),
+    ]);
 
-    const queryString = window.location.search.includes("=")
-      ? categoryQueryExtra
-      : categoryQueryFirst;
+    // queryStringArr.join('&') && history.push(`?${queryStringArr.join('&')}`);
+    // console.log(history);
 
-    history.push(history.location.search + queryString);
-
-    fetch(PRODUCTLIST_API + history.location.search, {
-      headers: { Authorization: localStorage.getItem("access_token") },
-    })
-      .then((res) => res.json())
-      .then((res) => setProducts(res.product));
+    // fetch(
+    //   PRODUCTLIST_API + history.location.search
+    //   //   , {
+    //   //   headers: { Authorization: localStorage.getItem("access_token") },
+    //   // }
+    // )
+    //   .then((res) => res.json())
+    //   .then((res) => setProducts(res.product));
   };
+
+  const saveSorting = (checkedSorting) => {
+    // console.log(checkedSorting);
+    if (queryStringArr.length > 3) {
+      setQueryStringArr([]);
+    }
+
+    const changedSorting = `sorting=${checkedSorting}`;
+
+    if (queryStringArr.some((each) => each.includes('sorting'))) {
+      const indexOfsort = queryStringArr.findIndex((each) => {
+        each.includes('sort');
+      });
+
+      setQueryStringArr((queryStringArr) =>
+        queryStringArr.splice(indexOfsort, 1, changedSorting)
+      );
+
+      // console.log(indexOfsort, changedSorting);
+    } else {
+      setQueryStringArr((queryStringArr) => [
+        ...queryStringArr,
+        changedSorting,
+      ]);
+    }
+
+    // history.push(`${history.location.search}?${queryStringArr.join('&')}`);
+    // fetch(PRODUCTLIST_API + queryString, {
+    //   headers: { Authorization: localStorage.getItem("access_token") },
+    // })
+    //   .then((res) => res.json())
+    //   .then((res) => setProducts(res.product));
+  };
+  console.log('queryStirngArr ==>', queryStringArr.join('&'));
+  console.log('checkedCategory ==>', checkedCategory);
 
   const filterProducts = products.filter(
     (product) =>
@@ -104,17 +142,17 @@ function Main() {
         <CategoryModal
           handleCategoryModal={handleCategoryModal}
           saveCategory={saveCategory}
+          setIsCategoryModalOn={setIsCategoryModalOn}
+          makeCategoryQuery={makeCategoryQuery}
           checkedCategory={checkedCategory}
-          setCheckedCategory={setCheckedCategory}
-          clearCategory={clearCategory}
         />
       )}
       {isSortingModalOn && (
         <SortingModal
           handleSortingModal={handleSortingModal}
           saveSorting={saveSorting}
-          checkedSorting={checkedSorting}
-          setCheckedSorting={setCheckedSorting}
+          // checkedSorting={checkedSorting}
+          // setCheckedSorting={setCheckedSorting}
         />
       )}
       <Navigation />
@@ -127,7 +165,7 @@ function Main() {
             onChange={handleSearch}
           />
           <SearchBtn
-            src="https://www.flaticon.com/svg/vstatic/svg/149/149852.svg?token=exp=1614775896~hmac=1c913769a5e3889fcf6b437946de1b78"
+            src="https://www.flaticon.com/svg/vstatic/svg/622/622669.svg?token=exp=1615437499~hmac=205a7de5c85a4731e97315fd5e947469"
             alt="search"
           />
         </Search>

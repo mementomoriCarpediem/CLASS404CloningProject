@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Navigation from '../../Components/Navigation/Navigation';
 
 export default function VideoPlay() {
   const [playingAt, SetPlayingAt] = useState(0);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     document.body.style.overflow = 'hidden';
     window.addEventListener('scroll', infiniteScroll, true);
   }, []);
@@ -50,184 +52,186 @@ export default function VideoPlay() {
   };
 
   return (
-    <Container>
-      <LeftWrapper>
-        <Top>
-          <p>스마트 스토어로 월 1000만원 만들기</p>
-          <div className="titleOnTop">
-            <span>반복과 진화의 힘</span>
-            <div className="buttons">
-              <div className="buttonUnit">
+    <>
+      <Navigation />
+      <Container>
+        <LeftWrapper>
+          <Top>
+            <p>스마트 스토어로 월 1000만원 만들기</p>
+            <div className="titleOnTop">
+              <span>반복과 진화의 힘</span>
+              <div className="buttons">
+                <div className="buttonUnit">
+                  <img
+                    src="https://www.flaticon.com/svg/vstatic/svg/2467/2467862.svg?token=exp=1614946914~hmac=f70e569c2b3fc54ffd538f6f48127279"
+                    alt="phone"
+                  />
+                  <span>앱으로 보기</span>
+                </div>
+                <div className="buttonUnit">
+                  <img
+                    src="https://www.flaticon.com/svg/vstatic/svg/2223/2223615.svg?token=exp=1614946941~hmac=0dccaa0f8fa793bd3aa98f9cbb239951"
+                    alt="arrow-left"
+                  />
+                  <span>이전 콘텐츠</span>
+                </div>
+                <div className="buttonUnit">
+                  <span>다음 콘텐츠</span>
+                  <img
+                    src="https://www.flaticon.com/svg/vstatic/svg/2223/2223627.svg?token=exp=1614946989~hmac=d3940cf855d2155c9dc7da6441208ccf"
+                    alt="arrow-right"
+                  />
+                </div>
                 <img
-                  src="https://www.flaticon.com/svg/vstatic/svg/2467/2467862.svg?token=exp=1614946914~hmac=f70e569c2b3fc54ffd538f6f48127279"
-                  alt="phone"
-                />
-                <span>앱으로 보기</span>
-              </div>
-              <div className="buttonUnit">
-                <img
-                  src="https://www.flaticon.com/svg/vstatic/svg/2223/2223615.svg?token=exp=1614946941~hmac=0dccaa0f8fa793bd3aa98f9cbb239951"
-                  alt="arrow-left"
-                />
-                <span>이전 콘텐츠</span>
-              </div>
-              <div className="buttonUnit">
-                <span>다음 콘텐츠</span>
-                <img
-                  src="https://www.flaticon.com/svg/vstatic/svg/2223/2223627.svg?token=exp=1614946989~hmac=d3940cf855d2155c9dc7da6441208ccf"
-                  alt="arrow-right"
+                  src="https://www.flaticon.com/svg/vstatic/svg/61/61140.svg?token=exp=1614947108~hmac=407c40ea25a0a2669c6409b249e1542c"
+                  alt="more"
                 />
               </div>
+            </div>
+          </Top>
+          <video
+            src="https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_1280_10MG.mp4"
+            ref={handlePlayingTime}
+            controls
+          >
+            Your browser does not support the video tag.
+          </video>
+          <ReviewTop>
+            <p>
+              댓글<span>405개</span>
+            </p>
+          </ReviewTop>
+          <ReviewFilter>
+            <div className="leftUnit">
+              <input type="checkbox" />
+              <span>내 댓글보기</span>
+            </div>
+            <div className="rightUnit">
+              <span>최신순</span>
+              <span>인기순</span>
+            </div>
+          </ReviewFilter>
+          <Review>
+            <div className="author">
               <img
-                src="https://www.flaticon.com/svg/vstatic/svg/61/61140.svg?token=exp=1614947108~hmac=407c40ea25a0a2669c6409b249e1542c"
-                alt="more"
+                src="https://class101.net/images/default-user.png"
+                alt="profileImg"
               />
+              <div>
+                <span>서범석</span>
+                <span>2021.4.23</span>
+              </div>
             </div>
-          </div>
-        </Top>
-        <video
-          src="https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_1280_10MG.mp4"
-          ref={handlePlayingTime}
-          controls
-        >
-          Your browser does not support the video tag.
-        </video>
-        <ReviewTop>
-          <p>
-            댓글<span>405개</span>
-          </p>
-        </ReviewTop>
-        <ReviewFilter>
-          <div className="leftUnit">
-            <input type="checkbox" />
-            <span>내 댓글보기</span>
-          </div>
-          <div className="rightUnit">
-            <span>최신순</span>
-            <span>인기순</span>
-          </div>
-        </ReviewFilter>
-        <Review>
-          <div className="author">
-            <img
-              src="https://class101.net/images/default-user.png"
-              alt="profileImg"
-            />
-            <div>
-              <span>서범석</span>
-              <span>2021.4.23</span>
+            <p>감사합니다.</p>
+            <p>
+              <span className="like" onClick={changeColor} />
+              <span>23</span>
+              <span>댓글 고정</span>
+            </p>
+          </Review>
+          <Review>
+            <div className="author">
+              <img
+                src="https://class101.net/images/default-user.png"
+                alt="profileImg"
+              />
+              <div>
+                <span>서범석</span>
+                <span>2021.4.23</span>
+              </div>
             </div>
-          </div>
-          <p>감사합니다.</p>
-          <p>
-            <span className="like" onClick={changeColor} />
-            <span>23</span>
-            <span>댓글 고정</span>
-          </p>
-        </Review>
-        <Review>
-          <div className="author">
-            <img
-              src="https://class101.net/images/default-user.png"
-              alt="profileImg"
-            />
-            <div>
-              <span>서범석</span>
-              <span>2021.4.23</span>
+            <p>감사합니다.</p>
+            <p>
+              <span className="like" onClick={changeColor} />
+              <span>23</span>
+              <span>댓글 고정</span>
+            </p>
+          </Review>
+          <Review>
+            <div className="author">
+              <img
+                src="https://class101.net/images/default-user.png"
+                alt="profileImg"
+              />
+              <div>
+                <span>서범석</span>
+                <span>2021.4.23</span>
+              </div>
             </div>
-          </div>
-          <p>감사합니다.</p>
-          <p>
-            <span className="like" onClick={changeColor} />
-            <span>23</span>
-            <span>댓글 고정</span>
-          </p>
-        </Review>
-        <Review>
-          <div className="author">
-            <img
-              src="https://class101.net/images/default-user.png"
-              alt="profileImg"
-            />
-            <div>
-              <span>서범석</span>
-              <span>2021.4.23</span>
+            <p>감사합니다.</p>
+            <p>
+              <span className="like" onClick={changeColor} />
+              <span>23</span>
+              <span>댓글 고정</span>
+            </p>
+          </Review>
+          <Review>
+            <div className="author">
+              <img
+                src="https://class101.net/images/default-user.png"
+                alt="profileImg"
+              />
+              <div>
+                <span>서범석</span>
+                <span>2021.4.23</span>
+              </div>
             </div>
-          </div>
-          <p>감사합니다.</p>
-          <p>
-            <span className="like" onClick={changeColor} />
-            <span>23</span>
-            <span>댓글 고정</span>
-          </p>
-        </Review>
-        <Review>
-          <div className="author">
-            <img
-              src="https://class101.net/images/default-user.png"
-              alt="profileImg"
-            />
-            <div>
-              <span>서범석</span>
-              <span>2021.4.23</span>
+            <p>감사합니다.</p>
+            <p>
+              <span className="like" onClick={changeColor} />
+              <span>23</span>
+              <span>댓글 고정</span>
+            </p>
+          </Review>
+          <Review>
+            <div className="author">
+              <img
+                src="https://class101.net/images/default-user.png"
+                alt="profileImg"
+              />
+              <div>
+                <span>서범석</span>
+                <span>2021.4.23</span>
+              </div>
             </div>
+            <p>감사합니다.</p>
+            <p>
+              <span className="like" onClick={changeColor} />
+              <span>23</span>
+              <span>댓글 고정</span>
+            </p>
+          </Review>
+        </LeftWrapper>
+        <Aside>
+          <header>수업 노트</header>
+          <div>
+            <p className="title">[수업 목표]</p>
+            <p>반복과 진화의 힘에 대해 알아보겠습니다.</p>
           </div>
-          <p>감사합니다.</p>
-          <p>
-            <span className="like" onClick={changeColor} />
-            <span>23</span>
-            <span>댓글 고정</span>
-          </p>
-        </Review>
-        <Review>
-          <div className="author">
-            <img
-              src="https://class101.net/images/default-user.png"
-              alt="profileImg"
-            />
-            <div>
-              <span>서범석</span>
-              <span>2021.4.23</span>
-            </div>
+          <div>
+            <p className="title">[수업 개요]</p>
+            <p>
+              ﹒<span onClick={moveTo}>00:05</span> 평범한 사람이~
+            </p>
+            <p>
+              ﹒<span onClick={moveTo}>00:10</span> 평범한 사람이~
+            </p>
+            <p>
+              ﹒<span onClick={moveTo}>00:27</span> 평범한 사람이~
+            </p>
           </div>
-          <p>감사합니다.</p>
-          <p>
-            <span className="like" onClick={changeColor} />
-            <span>23</span>
-            <span>댓글 고정</span>
-          </p>
-        </Review>
-      </LeftWrapper>
-      <Aside>
-        <header>수업 노트</header>
-        <div>
-          <p className="title">[수업 목표]</p>
-          <p>반복과 진화의 힘에 대해 알아보겠습니다.</p>
-        </div>
-        <div>
-          <p className="title">[수업 개요]</p>
-          <p>
-            ﹒<span onClick={moveTo}>00:05</span> 평범한 사람이~
-          </p>
-          <p>
-            ﹒<span onClick={moveTo}>00:10</span> 평범한 사람이~
-          </p>
-          <p>
-            ﹒<span onClick={moveTo}>00:27</span> 평범한 사람이~
-          </p>
-        </div>
-        <div>
-          <p className="title">[다음 수업 예고]</p>
-          <p>새로운 목표에 대해 이야기 해보겠습니다.</p>
-        </div>
-      </Aside>
-    </Container>
+          <div>
+            <p className="title">[다음 수업 예고]</p>
+            <p>새로운 목표에 대해 이야기 해보겠습니다.</p>
+          </div>
+        </Aside>
+      </Container>
+    </>
   );
 }
 
 const Container = styled.div`
   display: flex;
-  margin-top: 100px;
   height: 200%;
 `;
 

@@ -1,16 +1,11 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import RadioBtn from "../RadioBtn/RadioBtn";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { SORTINGLIST_DATA } from "../../config";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import RadioBtn from '../RadioBtn/RadioBtn';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { SORTINGLIST_DATA } from '../../config';
 
-function SortingModal({
-  handleSortingModal,
-  saveSorting,
-  checkedSorting,
-  setCheckedSorting,
-}) {
+function SortingModal({ handleSortingModal, saveSorting }) {
   const [sortingData, setSortingData] = useState([]);
 
   useEffect(() => {
@@ -24,10 +19,9 @@ function SortingModal({
   };
 
   const handleSorting = (e) => {
-    setCheckedSorting(e.target.value);
+    saveSorting(e.target.value);
+    handleSortingModal();
   };
-
-  checkedSorting && saveSorting();
 
   return (
     <ModalDim>

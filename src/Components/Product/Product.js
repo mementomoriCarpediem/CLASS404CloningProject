@@ -51,7 +51,7 @@ function Product({
 
   return (
     <ProductContainer id={id}>
-      <Thumbnail onClick={() => history.push(`/product/detail/${id}`)}>
+      <Thumbnail onClick={() => history.push(`/product/${id}`)}>
         <img src={thumbnail} alt="thumbnail" />
       </Thumbnail>
       <Badge>5만원 쿠폰</Badge>
