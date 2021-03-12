@@ -1,0 +1,108 @@
+.Footer {
+  .wrapper {
+    width: 1176px;
+    height: 200px;
+    margin: auto;
+    padding-top: 50px;
+
+    .footer_form {
+      .footer2,
+      .footer3,
+      .footer4 {
+        padding-left: 12px;
+      }
+      display: flex;
+      justify-content: space-between;
+
+      .footer1 {
+        .logo {
+          margin-bottom: 20px;
+          font-weight: bold;
+          font-size: 20px;
+        }
+        .store {
+          padding: 8px 0px;
+          margin-top: 12px;
+          color: black;
+          font-size: 14px;
+        }
+
+        div {
+          color: rgb(97, 101, 104);
+          line-height: 20px;
+          letter-spacing: -0.15px;
+          font-weight: normal;
+          font-size: 14px;
+        }
+      }
+      .footer2,
+      .footer3 {
+        p {
+          color: black;
+          line-height: 24px;
+          font-size: 16px;
+          font-weight: bold;
+        }
+        div {
+          padding-top: 20px;
+          font-weight: normal;
+          font-size: 14px;
+        }
+      }
+      .footer4 {
+        p {
+          color: black;
+          font-weight: bold;
+          line-height: 24px;
+          font-size: 16px;
+        }
+        button {
+          width: 200px;
+          height: 40px;
+          margin-top: 10px;
+          border-radius: 3px;
+          line-height: 20px;
+          text-align: center;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 14px;
+        }
+        div {
+          margin-top: 12px;
+          color: rgb(133, 138, 141);
+          text-align: center;
+        }
+      }
+    }
+    .footer_form2 {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 80px;
+      padding-top: 30px;
+      border-top: 1px solid rgb(248, 248, 249);
+    }
+    .sns,
+    .terms_conditions {
+      p {
+        padding-bottom: 10px;
+        a {
+          color: rgb(133, 138, 141);
+          font-size: 11px;
+          span {
+            font-weight: bold;
+          }
+        }
+        span {
+          width: 24px;
+          color: rgb(133, 138, 141);
+          text-align: center;
+        }
+      }
+      .address {
+        padding-top: 15px;
+        font-weight: lighter;
+        font-size: 10px;
+      }
+    }
+  }
+}

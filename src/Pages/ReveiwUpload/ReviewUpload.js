@@ -76,7 +76,7 @@ export default function ReviewUpload() {
           <div className="attatchmentContainer">
             <img src={imgUrl} className="attachment" alt="shownImage" />
             <img
-              src="https://www.flaticon.com/svg/vstatic/svg/992/992660.svg?token=exp=1615206066~hmac=5d643932e6bf6d3b4c924a824f70557e"
+              src="https://www.flaticon.com/svg/vstatic/svg/545/545676.svg?token=exp=1615510461~hmac=2595e28208186344665a4297842c0b95"
               className="closeButton"
               onClick={handleRemove}
               alt="close"

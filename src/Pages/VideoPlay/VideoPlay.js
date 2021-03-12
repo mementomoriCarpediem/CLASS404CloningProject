@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Navigation from '../../Components/Navigation/Navigation';
 
-export default function VideoPlay() {
+export default function VideoPlay(props) {
   const [playingAt, SetPlayingAt] = useState(0);
+
+  // console.log(props.location.state);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -50,6 +52,8 @@ export default function VideoPlay() {
   const changeColor = (e) => {
     // 백엔드의 데이터를 받아서, 좋아요 여부를 클래스 명 추가 및 제거로 반영
   };
+
+  const { reviews } = props.location.state;
 
   return (
     <>
@@ -112,94 +116,28 @@ export default function VideoPlay() {
             </div>
           </ReviewFilter>
           <Review>
-            <div className="author">
-              <img
-                src="https://class101.net/images/default-user.png"
-                alt="profileImg"
-              />
-              <div>
-                <span>서범석</span>
-                <span>2021.4.23</span>
-              </div>
-            </div>
-            <p>감사합니다.</p>
-            <p>
-              <span className="like" onClick={changeColor} />
-              <span>23</span>
-              <span>댓글 고정</span>
-            </p>
-          </Review>
-          <Review>
-            <div className="author">
-              <img
-                src="https://class101.net/images/default-user.png"
-                alt="profileImg"
-              />
-              <div>
-                <span>서범석</span>
-                <span>2021.4.23</span>
-              </div>
-            </div>
-            <p>감사합니다.</p>
-            <p>
-              <span className="like" onClick={changeColor} />
-              <span>23</span>
-              <span>댓글 고정</span>
-            </p>
-          </Review>
-          <Review>
-            <div className="author">
-              <img
-                src="https://class101.net/images/default-user.png"
-                alt="profileImg"
-              />
-              <div>
-                <span>서범석</span>
-                <span>2021.4.23</span>
-              </div>
-            </div>
-            <p>감사합니다.</p>
-            <p>
-              <span className="like" onClick={changeColor} />
-              <span>23</span>
-              <span>댓글 고정</span>
-            </p>
-          </Review>
-          <Review>
-            <div className="author">
-              <img
-                src="https://class101.net/images/default-user.png"
-                alt="profileImg"
-              />
-              <div>
-                <span>서범석</span>
-                <span>2021.4.23</span>
-              </div>
-            </div>
-            <p>감사합니다.</p>
-            <p>
-              <span className="like" onClick={changeColor} />
-              <span>23</span>
-              <span>댓글 고정</span>
-            </p>
-          </Review>
-          <Review>
-            <div className="author">
-              <img
-                src="https://class101.net/images/default-user.png"
-                alt="profileImg"
-              />
-              <div>
-                <span>서범석</span>
-                <span>2021.4.23</span>
-              </div>
-            </div>
-            <p>감사합니다.</p>
-            <p>
-              <span className="like" onClick={changeColor} />
-              <span>23</span>
-              <span>댓글 고정</span>
-            </p>
+            {reviews.map((review) => {
+              return (
+                <div className="container" key={review.id}>
+                  <div className="author">
+                    <img
+                      src="https://class101.net/images/default-user.png"
+                      alt="profileImg"
+                    />
+                    <div>
+                      <span>{review.author}</span>
+                      <span>2021.4.23</span>
+                    </div>
+                  </div>
+                  <p>{review.text}</p>
+                  <p>
+                    <span className="like" onClick={changeColor} />
+                    <span>23</span>
+                    <span>댓글 고정</span>
+                  </p>
+                </div>
+              );
+            })}
           </Review>
         </LeftWrapper>
         <Aside>
@@ -371,6 +309,10 @@ const Review = styled.div`
   border-bottom: ${({ theme }) => theme.border};
   padding: 20px 0;
 
+  .container {
+    margin-bottom: 30px;
+  }
+
   .author {
     display: flex;
     margin-bottom: 15px;
@@ -396,7 +338,7 @@ const Review = styled.div`
   }
 
   p {
-    line-height: 30px;
+    line-height: 23px;
   }
 
   p:last-child {

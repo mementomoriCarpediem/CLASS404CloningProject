@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import Product from "../Product/Product";
+import React from 'react';
+import styled from 'styled-components';
+import Product from '../Product/Product';
 
 function ProductList({ products }) {
   return (
@@ -18,6 +18,7 @@ function ProductList({ products }) {
             title={product.title}
             price={product.price}
             gift={product.gift}
+            reviewNumber={product.reviewNumber}
           />
         ))}
     </ProductListContainer>

@@ -7,6 +7,7 @@ import ProductsList from '../../Components/ProductList/ProductList';
 import Filter from '../../Components/Filter/Filter';
 import CategoryModal from '../../Components/CategoryModal/CategoryModal';
 import SortingModal from '../../Components/SortingModal/SortingModal';
+import Footer from '../../Components/Footer/Footer';
 
 import { PRODUCTLIST_DATA, PRODUCTLIST_API } from '../../config';
 
@@ -26,10 +27,16 @@ function Main() {
 
   const getProducts = () => {
     fetch(PRODUCTLIST_API, {
-      // headers: { Authorization: localStorage.getItem('access_token') },
+      headers: {
+        Authorization:
+          localStorage.getItem('access_token') ||
+          localStorage.getItem('kakao_token') ||
+          '',
+      },
     })
       .then((res) => res.json())
-      .then((res) => setProducts(res.product));
+      .then((res) => setProducts(res.product))
+      .then((res) => console.log(products));
   };
 
   const handleSearch = (e) => {
@@ -102,45 +109,48 @@ function Main() {
   );
 
   return (
-    <MainContainer>
-      {isCategoryModalOn && (
-        <CategoryModal
-          handleCategoryModal={handleCategoryModal}
-          checkedCategory={checkedCategory}
-          setCheckedCategory={setCheckedCategory}
-          saveCategory={saveCategory}
-          clearCategory={clearCategory}
-        />
-      )}
-      {isSortingModalOn && (
-        <SortingModal
-          handleSortingModal={handleSortingModal}
-          saveSorting={saveSorting}
-          checkedSorting={checkedSorting}
-          setCheckedSorting={setCheckedSorting}
-        />
-      )}
-      <Navigation />
-      <MainWrapper>
-        <SearchTitle>찾으시는 취미가 있으신가요?</SearchTitle>
-        <Search>
-          <SearchInput
-            type="search"
-            placeholder="ex) 미술, 개발, 부동산 "
-            onChange={handleSearch}
+    <>
+      <MainContainer>
+        {isCategoryModalOn && (
+          <CategoryModal
+            handleCategoryModal={handleCategoryModal}
+            checkedCategory={checkedCategory}
+            setCheckedCategory={setCheckedCategory}
+            saveCategory={saveCategory}
+            clearCategory={clearCategory}
           />
-          <SearchBtn
-            src="https://www.flaticon.com/svg/vstatic/svg/149/149852.svg?token=exp=1615468234~hmac=f7d4418a6d04578eabed015add1ec396"
-            alt="search"
+        )}
+        {isSortingModalOn && (
+          <SortingModal
+            handleSortingModal={handleSortingModal}
+            saveSorting={saveSorting}
+            checkedSorting={checkedSorting}
+            setCheckedSorting={setCheckedSorting}
           />
-        </Search>
-        <FilterList>
-          <Filter onClick={handleCategoryModal} name="카테고리 설정" />
-          <Filter onClick={handleSortingModal} name="정렬" />
-        </FilterList>
-        <ProductsList products={filterProducts} />
-      </MainWrapper>
-    </MainContainer>
+        )}
+        <Navigation />
+        <MainWrapper>
+          <SearchTitle>찾으시는 취미가 있으신가요?</SearchTitle>
+          <Search>
+            <SearchInput
+              type="search"
+              placeholder="ex) 미술, 개발, 부동산 "
+              onChange={handleSearch}
+            />
+            <SearchBtn
+              src="https://www.flaticon.com/svg/vstatic/svg/149/149852.svg?token=exp=1615468234~hmac=f7d4418a6d04578eabed015add1ec396"
+              alt="search"
+            />
+          </Search>
+          <FilterList>
+            <Filter onClick={handleCategoryModal} name="카테고리 설정" />
+            <Filter onClick={handleSortingModal} name="정렬" />
+          </FilterList>
+          <ProductsList products={filterProducts} />
+        </MainWrapper>
+      </MainContainer>
+      <Footer />
+    </>
   );
 }
 

@@ -19,7 +19,6 @@ function ProductDetail(props) {
       .then((res) => res.json())
       .then((data) => {
         setProductData(data.product[0]);
-        // console.log(data.product[0]);
       });
   };
 
@@ -36,8 +35,6 @@ function ProductDetail(props) {
     reviewNumber,
   } = productData;
 
-  console.log(reviews);
-
   return (
     <>
       <Navigation />
@@ -46,7 +43,7 @@ function ProductDetail(props) {
           <div className="mainImageContainer">
             <img src={thumbnail} alt="mainImage" />
 
-            <Link to="/videoplay">
+            <Link to={{ pathname: '/videoplay', state: { reviews: reviews } }}>
               <button className="preview">
                 <img
                   src="https://www.flaticon.com/svg/vstatic/svg/13/13021.svg?token=exp=1615166334~hmac=0516000c85c83e8f759760d3b40767d9"

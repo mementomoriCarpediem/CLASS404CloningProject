@@ -17,6 +17,7 @@ function Product({
   title,
   price,
   gift,
+  reviewNumber,
 }) {
   const history = useHistory();
   const [isLikeCliked, setIsLikeCliked] = useState(like);
@@ -31,12 +32,7 @@ function Product({
             localStorage.getItem('access_token') ||
             localStorage.getItem('kakao_token'),
         },
-        body: {
-          like: true,
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => setLikeNum(res.likeCount));
+      }).then((res) => res.json());
 
       if (isLikeCliked === false) {
         alert('찜한 목록에 추가되었습니다!');
@@ -74,6 +70,7 @@ function Product({
         <Like>
           <FontAwesomeIcon icon={faHeart} color={theme.gray} size="xs" />
           <span className="count">{likeNum}</span>
+          <span className="count">리뷰수: {reviewNumber}</span>
         </Like>
         <Line />
         <Price>{Math.floor(price).toLocaleString()}원</Price>

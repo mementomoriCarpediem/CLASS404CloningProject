@@ -23,6 +23,7 @@ class Routes extends Component {
           <Route exact path="/reviewupload" component={ReviewUpload} />
           <Route exact path="/mypage" component={MyPage} />
           <Route exact path="/videoplay" component={VideoPlay} />
+          <Route exact path="/apply" component={CreatorApply} />
         </Switch>
       </Router>
     );
