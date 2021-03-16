@@ -24,7 +24,10 @@ function Product({
   const [likeNum, setLikeNum] = useState(likeCount);
 
   const handleLike = () => {
-    if (localStorage.getItem('access_token')) {
+    if (
+      localStorage.getItem('access_token') ||
+      localStorage.getItem('kakao_token')
+    ) {
       fetch(`${PRODUCTLIST_API}/${id}/like`, {
         method: 'POST',
         headers: {

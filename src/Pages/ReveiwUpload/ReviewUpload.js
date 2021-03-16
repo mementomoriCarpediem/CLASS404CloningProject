@@ -18,12 +18,6 @@ export default function ReviewUpload() {
 
     formData.append('attatchedImg', img);
 
-    // const config = {
-    //   headers: {
-    //     'content-type': 'multipart/form-data',
-    //   },
-    // };
-
     // fetch(REVIEWUPLOAD_API, {
     //   method: 'POST',
     //   headers: {

@@ -17,9 +17,12 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.evn
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
 .eslintcache
+
+/관련 영상 및 이미지

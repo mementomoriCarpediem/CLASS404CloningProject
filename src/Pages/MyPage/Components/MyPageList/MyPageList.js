@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import Product from "../../../../Components/Product/Product";
-import Blank from "../Blank/Blank";
-import Title from "../Title/Title";
+import React from 'react';
+import styled from 'styled-components';
+import Product from '../../../../Components/Product/Product';
+import Blank from '../Blank/Blank';
+import Title from '../Title/Title';
 
 function MyPageList({ products, title }) {
   return (

@@ -36,6 +36,8 @@ function Signup(props) {
           .then((res) => res.json())
           .then((res) => {
             localStorage.setItem('kakao_token', res.access_token);
+            localStorage.setItem('profileImage', res.profileImage);
+            localStorage.setItem('user_name', res.user_name);
             if (res.access_token) {
               alert('로그인 성공!');
               props.history.push('/');
@@ -91,7 +93,7 @@ function Signup(props) {
         .then((res) => res.json())
         .then((data) => {
           data.AUTHORIZATION &&
-            localStorage.setItem('class404_token', data.AUTHORIZATION);
+            localStorage.setItem('access_token', data.AUTHORIZATION);
           props.history.push('/login');
         });
     } else {

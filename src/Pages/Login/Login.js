@@ -20,7 +20,6 @@ function Login(props) {
         console.log('kakao', authObj);
 
         fetch(`${KAKAO_API}`, {
-          method: 'GET',
           headers: {
             Authorization: authObj.access_token,
           },
@@ -91,7 +90,8 @@ function Login(props) {
 
     if (!email) {
       setIdEmptyMsg('⚠️ 이메일을 입력해주세요!');
-    } else if (!pw) {
+    }
+    if (!pw) {
       setPwEmptyMsg('⚠️ 비밀번호를 입력해주세요!');
     }
   };
@@ -178,6 +178,7 @@ const Top = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
+
   h2 {
     display: inline;
     font-size: 20px;
@@ -186,11 +187,10 @@ const Top = styled.div`
 `;
 
 export const FormHeader = styled.header`
-  font-size: 30px;
-  font-weight: 600;
   width: 100%;
   margin: 20px 0px 50px 0px;
-  margin-right: auto;
+  font-size: 30px;
+  font-weight: 600;
 `;
 
 export const Form = styled.form`
@@ -254,6 +254,7 @@ export const UserContract = styled.div`
   font-size: 12px;
   margin: 20px auto;
   color: ${({ theme }) => theme.gray};
+
   a {
     color: skyblue;
   }

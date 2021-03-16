@@ -11,7 +11,7 @@ import Footer from '../../Components/Footer/Footer';
 
 import { PRODUCTLIST_DATA, PRODUCTLIST_API } from '../../config';
 
-function Main() {
+function Main(props) {
   const history = useHistory();
   const [keyword, setKeyword] = useState('');
   const [products, setProducts] = useState([]);
@@ -23,20 +23,61 @@ function Main() {
   useEffect(() => {
     window.scrollTo(0, 0);
     getProducts();
-  }, []);
+    makeQuery(checkedCategory, checkedSorting);
+  }, [checkedSorting, checkedCategory]);
 
   const getProducts = () => {
-    fetch(PRODUCTLIST_API, {
-      headers: {
-        Authorization:
-          localStorage.getItem('access_token') ||
-          localStorage.getItem('kakao_token') ||
-          '',
-      },
+    // fetch(PRODUCTLIST_API, {
+    //   headers: {
+    //     Authorization:
+    //       localStorage.getItem('access_token') ||
+    //       localStorage.getItem('kakao_token') ||
+    //       '',
+    //   },
+    // })
+    //   .then((res) => res.json())
+    //   .then((res) => setProducts(res.product))
+    //   .then((res) => console.log(products));
+    fetch(PRODUCTLIST_DATA)
+      .then((res) => res.json())
+      .then((res) => setProducts(res.product));
+    // .then((res) => console.log(products));
+  };
+
+  const getFilteredList = () => {
+    fetch(PRODUCTLIST_API + history.location.search, {
+      headers: { Authorization: localStorage.getItem('access_token') || '' },
     })
       .then((res) => res.json())
-      .then((res) => setProducts(res.product))
-      .then((res) => console.log(products));
+      .then((res) => setProducts(res.product));
+  };
+
+  const makeQuery = (checkedCategory, checkedSorting) => {
+    // console.log(checkedCategory, checkedSorting);
+    // let isfilteredCategory = false;
+    // let isfilteredSorting = false;
+
+    if (checkedCategory[0] && !checkedSorting) {
+      const categoryQs = checkedCategory
+        .map((category) => `category=${category}`)
+        .join('&');
+
+      history.push(`?${categoryQs}`);
+      getFilteredList();
+    } else if (checkedSorting && !checkedCategory[0]) {
+      const sortingQs = `sort=${checkedSorting}`;
+
+      history.push(`?${sortingQs}`);
+      getFilteredList();
+    } else if (checkedSorting && checkedCategory[0]) {
+      const categoryQs = checkedCategory
+        .map((category) => `category=${category}`)
+        .join('&');
+      const sortingQs = `sort=${checkedSorting}`;
+
+      history.push(`?${sortingQs}&${categoryQs}`);
+      getFilteredList();
+    }
   };
 
   const handleSearch = (e) => {
@@ -58,47 +99,16 @@ function Main() {
     history.push('/');
   };
 
-  const saveSorting = () => {
+  const saveSorting = (checkedlist) => {
     handleSortingModal();
 
-    const sortingQueryFirst = '?sort=' + checkedSorting;
-    const sortingQueryExtra = '&sort=' + checkedSorting;
-
-    const queryString = window.location.search.includes('=')
-      ? sortingQueryExtra
-      : sortingQueryFirst;
-
-    history.push(history.location.search + queryString);
-
-    fetch(PRODUCTLIST_API + queryString, {
-      headers: { Authorization: localStorage.getItem('access_token') },
-    })
-      .then((res) => res.json())
-      .then((res) => setProducts(res.product));
+    setCheckedSorting(checkedlist);
   };
 
-  const saveCategory = () => {
+  const saveCategory = (checkedItems) => {
     handleCategoryModal();
 
-    const categoryQueryExtra = checkedCategory
-      .map((id) => '&category=' + id)
-      .join()
-      .replaceAll(',', '');
-
-    const categoryQueryFirst =
-      '?' + categoryQueryExtra.slice(1, categoryQueryExtra.length);
-
-    const queryString = window.location.search.includes('=')
-      ? categoryQueryExtra
-      : categoryQueryFirst;
-
-    history.push(history.location.search + queryString);
-
-    fetch(PRODUCTLIST_API + history.location.search, {
-      headers: { Authorization: localStorage.getItem('access_token') },
-    })
-      .then((res) => res.json())
-      .then((res) => setProducts(res.product));
+    setCheckedCategory(checkedItems);
   };
 
   const filterProducts = products?.filter(
@@ -124,7 +134,6 @@ function Main() {
           <SortingModal
             handleSortingModal={handleSortingModal}
             saveSorting={saveSorting}
-            checkedSorting={checkedSorting}
             setCheckedSorting={setCheckedSorting}
           />
         )}

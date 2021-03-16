@@ -8,7 +8,7 @@ class Footer extends Component {
         <div className="wrapper">
           <div className="footer_form">
             <div className="footer1">
-              <p className="logo">CLASS404</p>
+              <div className="logo">CLASS404</div>
               <div>Building a world</div>
               <div>where anyone can live doing</div>
               <div>what they love</div>

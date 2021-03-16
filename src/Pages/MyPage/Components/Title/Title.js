@@ -1,11 +1,11 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 function Title({ title, moreLink, dataLength }) {
   return (
     <TitleConatiner>
       <TitleName>{title}</TitleName>
-      {dataLength > 3 && <MoreBtn onClick={{ moreLink }}>더보기</MoreBtn>}
+      {dataLength >= 3 && <MoreBtn onClick={{ moreLink }}>더보기</MoreBtn>}
     </TitleConatiner>
   );
 }

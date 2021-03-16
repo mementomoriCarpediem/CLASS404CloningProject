@@ -55,11 +55,11 @@ class CreatorApply extends Component {
     formData.append('category', category);
     formData.append('detailCategory', detail_category);
     formData.append('level', level);
-    formData.append('thumbnail', selectedFile);
+    formData.append('thumbnail', thumbnail);
     formData.append('title', title);
-    formData.append('image1', selectedFile);
-    formData.append('image2', selectedFile);
-    formData.append('image3', selectedFile);
+    formData.append('image1', image1);
+    formData.append('image2', image2);
+    formData.append('image3', image3);
     formData.append('description', description);
     formData.append('price', price);
     formData.append('gender', gender);
@@ -76,24 +76,26 @@ class CreatorApply extends Component {
     fetch(PRODUCTLIST_API, {
       method: 'POST',
       headers: {
-        Authorization: localStorage.getItem('access_token'),
+        Authorization:
+          localStorage.getItem('access_token') ||
+          localStorage.getItem('kakao_token'),
       },
       body: formData,
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.message === 'SUCCESS') {
-          alert('크리에이터 어플라이 완료.');
-          this.props.history.push('/');
-        } else {
-          alert('다시 확인해주세요');
-        }
-      });
+    }).then((response) => response.json());
+    alert('크리에이터 어플라이 완료.');
+    this.props.history.push('/');
+    // .then((result) => {
+    //   if (true) {
+
+    //   } else {
+    //     alert('다시 확인해주세요');
+    //   }
+    // });
   };
 
   handleFileInput = (evt) => {
     let reader = new FileReader();
-    let previewUrl = reader.readAsDataURL(evt.target.files[0]);
+    reader.readAsDataURL(evt.target.files[0]);
 
     reader.onloadend = function (e) {
       this.setState({

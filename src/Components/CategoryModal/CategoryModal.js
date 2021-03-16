@@ -6,18 +6,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { CATEGORYLIST_DATA } from '../../config';
 
-function CategoryModal({
-  handleCategoryModal,
-  checkedCategory,
-  setCheckedCategory,
-  saveCategory,
-  clearCategory,
-}) {
+function CategoryModal({ handleCategoryModal, saveCategory, clearCategory }) {
   const [categoryData, setCategoryData] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
   useEffect(() => {
     getCategory();
-  }, []);
+    console.log(selectedCategories);
+  }, [selectedCategories]);
 
   const getCategory = () => {
     fetch(CATEGORYLIST_DATA)
@@ -26,11 +22,11 @@ function CategoryModal({
   };
 
   const handleCategory = (e) => {
-    if (checkedCategory.includes(e.target.value)) {
-      checkedCategory.splice(checkedCategory.indexOf(e.target.value), 1);
-    } else {
-      setCheckedCategory([...checkedCategory, e.target.value]);
-    }
+    e.target.checked
+      ? setSelectedCategories([...selectedCategories, e.target.value])
+      : setSelectedCategories((selectedCategories) =>
+          selectedCategories.filter((category) => category !== e.target.value)
+        );
   };
 
   return (
@@ -57,7 +53,7 @@ function CategoryModal({
           <Button name="초기화" onClick={() => clearCategory()} />
           <Button
             name="저장하기"
-            onClick={() => saveCategory(checkedCategory)}
+            onClick={() => saveCategory(selectedCategories)}
           />
         </ButtonWrapper>
       </ModalContainer>

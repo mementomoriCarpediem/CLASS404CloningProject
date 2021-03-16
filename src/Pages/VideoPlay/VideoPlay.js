@@ -116,28 +116,29 @@ export default function VideoPlay(props) {
             </div>
           </ReviewFilter>
           <Review>
-            {reviews.map((review) => {
-              return (
-                <div className="container" key={review.id}>
-                  <div className="author">
-                    <img
-                      src="https://class101.net/images/default-user.png"
-                      alt="profileImg"
-                    />
-                    <div>
-                      <span>{review.author}</span>
-                      <span>2021.4.23</span>
+            {reviews &&
+              reviews.map((review) => {
+                return (
+                  <div className="container" key={review.id}>
+                    <div className="author">
+                      <img
+                        src="https://class101.net/images/default-user.png"
+                        alt="profileImg"
+                      />
+                      <div>
+                        <span>{review.author}</span>
+                        <span>2021.4.23</span>
+                      </div>
                     </div>
+                    <p>{review.text}</p>
+                    <p>
+                      <span className="like" onClick={changeColor} />
+                      <span>23</span>
+                      <span>댓글 고정</span>
+                    </p>
                   </div>
-                  <p>{review.text}</p>
-                  <p>
-                    <span className="like" onClick={changeColor} />
-                    <span>23</span>
-                    <span>댓글 고정</span>
-                  </p>
-                </div>
-              );
-            })}
+                );
+              })}
           </Review>
         </LeftWrapper>
         <Aside>

@@ -15,7 +15,7 @@ function MyPageMain({ productLike, productBuy, productCreate, queryString }) {
     <MyPageMainContainer>
       <Title title="찜한 클래스" moreLink="" dataLength={productLike} />
       <ProductList>
-        {productLike ? (
+        {productLike.length ? (
           productLike.map((product) => (
             <Product
               key={product.id}
@@ -36,7 +36,7 @@ function MyPageMain({ productLike, productBuy, productCreate, queryString }) {
       </ProductList>
       <Title title="수강 등록한 클래스" dataLength={productBuy} />
       <ProductList>
-        {productBuy ? (
+        {productBuy.length ? (
           productBuy.map((product) => (
             <Product
               key={product.id}
@@ -57,7 +57,7 @@ function MyPageMain({ productLike, productBuy, productCreate, queryString }) {
       </ProductList>
       <Title title="내가 만든 클래스" dataLength={productCreate} />
       <ProductList>
-        {productCreate ? (
+        {productCreate.length ? (
           productCreate.map((product) => (
             <Product
               key={product.id}

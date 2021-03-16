@@ -195,6 +195,7 @@ const AccountBox = styled.div`
   padding: 20px;
   top: 80px;
   right: 0;
+  z-index: 100;
   font-size: 14px;
   filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.1));
 `;

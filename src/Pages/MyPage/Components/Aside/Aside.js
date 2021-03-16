@@ -1,26 +1,26 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import styled from "styled-components";
-import MenuTitle from "../MenuTitle/MenuTitle";
-import MenuLink from "../MenuLink/MenuLink";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import MenuTitle from '../MenuTitle/MenuTitle';
+import MenuLink from '../MenuLink/MenuLink';
 
 function Aside({ handleMenu, currentId }) {
   const history = useHistory();
 
   const logout = () => {
     localStorage.clear();
-    history.push("/");
+    history.push('/');
   };
 
-  const menuOn = () => {
-    if (currentId === 2) {
-      return "likeOn";
-    } else if (currentId === 3) {
-      return "buyOn";
-    } else if (currentId === 4) {
-      return "createOn";
-    }
-  };
+  // const menuOn = () => {
+  //   if (currentId === 2) {
+  //     return "likeOn";
+  //   } else if (currentId === 3) {
+  //     return "buyOn";
+  //   } else if (currentId === 4) {
+  //     return "createOn";
+  //   }
+  // };
 
   return (
     <AsideContainer>
