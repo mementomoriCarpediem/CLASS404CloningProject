@@ -37,11 +37,10 @@ function Main(props) {
     // })
     //   .then((res) => res.json())
     //   .then((res) => setProducts(res.product))
-    //   .then((res) => console.log(products));
+
     fetch(PRODUCTLIST_DATA)
       .then((res) => res.json())
       .then((res) => setProducts(res.product));
-    // .then((res) => console.log(products));
   };
 
   const getFilteredList = () => {
@@ -53,10 +52,6 @@ function Main(props) {
   };
 
   const makeQuery = (checkedCategory, checkedSorting) => {
-    // console.log(checkedCategory, checkedSorting);
-    // let isfilteredCategory = false;
-    // let isfilteredSorting = false;
-
     if (checkedCategory[0] && !checkedSorting) {
       const categoryQs = checkedCategory
         .map((category) => `category=${category}`)
@@ -90,7 +85,6 @@ function Main(props) {
 
   const handleSortingModal = () => {
     setIsSortingModalOn(!isSortingModalOn);
-    // setCheckedSorting('');
   };
 
   const clearCategory = () => {
