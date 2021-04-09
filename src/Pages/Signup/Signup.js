@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { FaComment } from 'react-icons/fa';
+
 import { KAKAO_API, SIGNUP_API } from '../../config';
 import signUpProps from '../../signUpData';
 import {
@@ -153,10 +155,7 @@ function Signup(props) {
         </UserContractSignup>
         <SnsLoginSignup>
           <ButtonSignUp className="snsButton" onClick={kakaoLogin}>
-            <img
-              src="https://www.flaticon.com/svg/vstatic/svg/2462/2462844.svg?token=exp=1614761866~hmac=1cdc4a662e83328497ed72fee74e624a"
-              alt="commentIcon"
-            />
+            <FaComment size={'20px'} className="snsButton" />
             {signUpProps.button[1]}
           </ButtonSignUp>
         </SnsLoginSignup>

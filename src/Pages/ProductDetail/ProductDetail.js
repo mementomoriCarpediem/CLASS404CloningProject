@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import { FaPlay } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
+
 import { PRODUCTLIST_API } from '../../config';
 import styled from 'styled-components';
 import ReviewSection from './ReviewSection';
@@ -15,11 +18,14 @@ function ProductDetail(props) {
   }, []);
 
   const getData = () => {
-    fetch(`${PRODUCTLIST_API}/${props.match.params.id}`)
+    // fetch(`${PRODUCTLIST_API}/${props.match.params.id}`)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setProductData(data.product[0]);
+    //   });
+    fetch('/data/productMockData.json')
       .then((res) => res.json())
-      .then((data) => {
-        setProductData(data.product[0]);
-      });
+      .then((data) => setProductData(data.product));
   };
 
   const {
@@ -45,10 +51,7 @@ function ProductDetail(props) {
 
             <Link to={{ pathname: '/videoplay', state: { reviews: reviews } }}>
               <button className="preview">
-                <img
-                  src="https://www.flaticon.com/svg/vstatic/svg/13/13021.svg?token=exp=1615166334~hmac=0516000c85c83e8f759760d3b40767d9"
-                  alt="preview"
-                />
+                <FaPlay color={'white'} />
                 클래스 미리보기
               </button>
             </Link>
@@ -80,10 +83,7 @@ function ProductDetail(props) {
               return (
                 <div>
                   <div className="author">
-                    <img
-                      src="https://www.flaticon.com/svg/vstatic/svg/1946/1946429.svg?token=exp=1614927644~hmac=70e5850fcc6f210ad521a76ba9def55f"
-                      alt="profileImg"
-                    />
+                    <FaUser size={'20px'} color={'gray'} />
                     <div className="nameAndDate">
                       <span>{review.author}</span>
                       <span>2021.2.13</span>

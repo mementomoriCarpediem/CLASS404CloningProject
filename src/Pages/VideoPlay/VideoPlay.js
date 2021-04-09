@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { FaMobileAlt } from 'react-icons/fa';
+import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowRight } from 'react-icons/fa';
+import { FaEllipsisV } from 'react-icons/fa';
+
 import Navigation from '../../Components/Navigation/Navigation';
 
 export default function VideoPlay(props) {
@@ -66,30 +71,18 @@ export default function VideoPlay(props) {
               <span>반복과 진화의 힘</span>
               <div className="buttons">
                 <div className="buttonUnit">
-                  <img
-                    src="https://www.flaticon.com/svg/vstatic/svg/2467/2467862.svg?token=exp=1614946914~hmac=f70e569c2b3fc54ffd538f6f48127279"
-                    alt="phone"
-                  />
+                  <FaMobileAlt />
                   <span>앱으로 보기</span>
                 </div>
                 <div className="buttonUnit">
-                  <img
-                    src="https://www.flaticon.com/svg/vstatic/svg/2223/2223615.svg?token=exp=1614946941~hmac=0dccaa0f8fa793bd3aa98f9cbb239951"
-                    alt="arrow-left"
-                  />
+                  <FaArrowLeft />
                   <span>이전 콘텐츠</span>
                 </div>
                 <div className="buttonUnit">
                   <span>다음 콘텐츠</span>
-                  <img
-                    src="https://www.flaticon.com/svg/vstatic/svg/2223/2223627.svg?token=exp=1614946989~hmac=d3940cf855d2155c9dc7da6441208ccf"
-                    alt="arrow-right"
-                  />
+                  <FaArrowRight />
                 </div>
-                <img
-                  src="https://www.flaticon.com/svg/vstatic/svg/61/61140.svg?token=exp=1614947108~hmac=407c40ea25a0a2669c6409b249e1542c"
-                  alt="more"
-                />
+                <FaEllipsisV />
               </div>
             </div>
           </Top>

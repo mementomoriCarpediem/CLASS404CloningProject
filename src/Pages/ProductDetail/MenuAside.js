@@ -1,6 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { FaYoutube } from 'react-icons/fa';
+import { FaGift } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
+import { FaHeart } from 'react-icons/fa';
+import { FaShare } from 'react-icons/fa';
+
 export default function MenuAside({
   category,
   creatorName,
@@ -23,48 +29,30 @@ export default function MenuAside({
       </div>
       <AdditionalInfo>
         <div>
-          <img
-            src="https://www.flaticon.com/svg/vstatic/svg/1077/1077046.svg?token=exp=1614919553~hmac=b150821a2c051dedcb807b6bddf02f42"
-            alt="video"
-          />
+          <FaYoutube size={'25px'} color={'gray'} />
           <span>콘텐츠 이용권</span>
         </div>
         <div>
-          <img
-            src="https://www.flaticon.com/svg/vstatic/svg/747/747376.svg?token=exp=1614919704~hmac=3233481c99b0420122e75b539993fc32"
-            alt="begginer"
-          />
+          <FaGift size={'25px'} color={'gray'} />
           <span>입문자 대상</span>
         </div>
         <div>
-          <img
-            src="https://www.flaticon.com/svg/vstatic/svg/4021/4021559.svg?token=exp=1615445685~hmac=1688d9676c5874d3bd310ef730d3aa3f"
-            alt="satisfaction"
-          />
+          <FaUser size={'25px'} color={'gray'} />
           <span>강의 만족도 98%</span>
         </div>
       </AdditionalInfo>
 
       <div className="buttons">
         <Button>
-          <img
-            src="https://www.flaticon.com/svg/vstatic/svg/1077/1077035.svg?token=exp=1614863765~hmac=391d9d386324afe908f26a504aabb667"
-            alt="heart"
-          />
+          <FaHeart size={'25px'} color={'gray'} />
           <span>{likeCount}</span>
         </Button>
         <Button>
-          <img
-            src="https://www.flaticon.com/svg/vstatic/svg/3580/3580382.svg?token=exp=1614863808~hmac=72c78c519a92311a6dd7578548b295c2"
-            alt="share"
-          />
+          <FaShare size={'25px'} color={'gray'} />
           <span>공유하기</span>
         </Button>
         <Button>
-          <img
-            src="https://www.flaticon.com/svg/vstatic/svg/3037/3037049.svg?token=exp=1614863856~hmac=cbe073abf7153b6422f04dde6e65f469"
-            alt="gift"
-          />
+          <FaGift size={'25px'} color={'gray'} />
           <span>선물하기</span>
         </Button>
       </div>

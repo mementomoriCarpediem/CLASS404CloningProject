@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { FaSearch } from 'react-icons/fa';
 
 import Navigation from '../../Components/Navigation/Navigation';
 import ProductsList from '../../Components/ProductList/ProductList';
@@ -140,9 +141,9 @@ function Main(props) {
               placeholder="ex) 미술, 개발, 부동산 "
               onChange={handleSearch}
             />
-            <SearchBtn
-              src="https://www.flaticon.com/svg/vstatic/svg/149/149852.svg?token=exp=1615468234~hmac=f7d4418a6d04578eabed015add1ec396"
-              alt="search"
+            <FaSearch
+              size={'20px'}
+              style={{ position: 'absolute', right: '20px' }}
             />
           </Search>
           <FilterList>

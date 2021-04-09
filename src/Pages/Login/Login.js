@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { KAKAO_API, Login_API } from '../../config';
 import signInProps from '../../signInData';
 
+import { FaComment } from 'react-icons/fa';
+
 function Login(props) {
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
@@ -138,10 +140,7 @@ function Login(props) {
 
           <SnsLogin>
             <Button className="snsButton" onClick={kakaoLogin}>
-              <img
-                src="https://www.flaticon.com/svg/vstatic/svg/2462/2462844.svg?token=exp=1614761866~hmac=1cdc4a662e83328497ed72fee74e624a"
-                alt="commentIcon"
-              />
+              <FaComment size={'20px'} style={{ marginRight: '10px' }} />
               {signInProps.button[1]}
             </Button>
           </SnsLogin>

@@ -20,6 +20,7 @@ class Routes extends Component {
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/apply" component={CreatorApply} />
           <Route exact path="/product/:id" component={ProductDetail} />
+          {/* <Route exact path="/product/:id" component={ProductDetail} /> */}
           <Route exact path="/reviewupload" component={ReviewUpload} />
           <Route exact path="/mypage" component={MyPage} />
           <Route exact path="/videoplay" component={VideoPlay} />

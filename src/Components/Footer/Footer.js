@@ -79,15 +79,6 @@ class Footer extends Component {
                   <a href="https://class101.net/">Terms for Subscription</a>
                 </p>
               </div>
-              <p>
-                <div className="address">
-                  <a href="https://class101.net/">
-                    CLASS 101, LLC. | CEO Jiyeon Ko | support@class101.net | The
-                    18th floor of the 10 Severance Building in Tongil-ro,
-                    Jung-gu, Seoul
-                  </a>
-                </div>
-              </p>
             </div>
           </div>
         </div>
